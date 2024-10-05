@@ -6,9 +6,10 @@ import { Image, StyleSheet, TouchableOpacity } from "react-native";
 interface ScreenProps {
     canGoBack?:boolean;
     titleScreen?: string;
+    children?:React.ReactNode;
 }
 
-export const ScreenComponent = ({canGoBack, titleScreen}:ScreenProps) => {
+export const ScreenComponent = ({canGoBack, titleScreen, children}:ScreenProps) => {
 
     const navigate = useNavigation();
 
@@ -19,9 +20,9 @@ export const ScreenComponent = ({canGoBack, titleScreen}:ScreenProps) => {
     return (
         <ThemedView style={styles.container}>
             
+            {canGoBack && 
             <ThemedView style={styles.navGoBack}>
-
-                <TouchableOpacity hitSlop={10}>
+                <TouchableOpacity onPress={handleGoBack} hitSlop={10}>
                     <Image style={styles.imageGoBack} alt="Image de seta para esquerda" source={require('../../../assets/images/Arrow (1).png')} />
                 </TouchableOpacity>
 
@@ -30,9 +31,9 @@ export const ScreenComponent = ({canGoBack, titleScreen}:ScreenProps) => {
                 </ThemedText>
 
                 <ThemedView />
-
-            </ThemedView>
-
+            </ThemedView>}
+            
+            {children}
         </ThemedView>
     )
 }
@@ -52,11 +53,12 @@ const styles = StyleSheet.create({
     },
     imageGoBack : {
         width:8,
-        height:18,
+        height:16,
     },
     titleComponent: {
         color: "#E2F163",
         fontSize:25,
-        marginTop:10
+        marginTop:10,
+        fontWeight:'bold'
     }
 });
